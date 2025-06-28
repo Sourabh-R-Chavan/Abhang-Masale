@@ -2,7 +2,9 @@ package com.Abhang.Masala.controller;
 
 import com.Abhang.Masala.dto.UserDtoRequest;
 import com.Abhang.Masala.entity.User;
+import com.Abhang.Masala.service.EmailService;
 import com.Abhang.Masala.service.UserServiceImpl;
+import com.Abhang.Masala.util.Variables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,13 @@ public class loginController {
     @Autowired
     UserServiceImpl userService;
 
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping("/signup")
     public ResponseEntity<Optional<User>> signUp(@RequestBody User user) {
         Optional<User> userObj = userService.signup(user);
+        emailService.sendSimpleEmail(user.getEmail(), Variables.SIGNUP_SUBJECT,Variables.SIGNUP_BODY);
         return ResponseEntity.ok().body(userObj);
     }
 
