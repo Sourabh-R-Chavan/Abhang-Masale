@@ -1,5 +1,6 @@
 package com.Abhang.Masala.service;
 
+import com.Abhang.Masala.dto.UserDtoRequest;
 import com.Abhang.Masala.entity.User;
 import com.Abhang.Masala.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Optional<User> login(User user) {
-        return userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
+    public Optional<User> login(UserDtoRequest userDtoRequest) {
+        Optional<User> emailObj = userRepo.findByEmail(userDtoRequest.getEmail());
+        Optional<User> pass = userRepo.findByPassword(userDtoRequest.getPassword());
+        System.out.printf(emailObj+" "+pass);
+        return emailObj;
     }
 
 }
