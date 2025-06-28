@@ -28,7 +28,7 @@ public class loginController {
     public ResponseEntity<?> login(@RequestBody UserDtoRequest userDtoRequest) {
         if (userDtoRequest!=null) {
             Optional<User> loginObj = userService.login(userDtoRequest);
-            return ResponseEntity.status(HttpStatus.FOUND).body(loginObj);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(loginObj);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).
                 body(User.builder().firstName("null"));

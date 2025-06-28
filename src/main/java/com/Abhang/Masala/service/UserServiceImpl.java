@@ -23,10 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> login(UserDtoRequest userDtoRequest) {
-        Optional<User> emailObj = userRepo.findByEmail(userDtoRequest.getEmail());
-        Optional<User> pass = userRepo.findByPassword(userDtoRequest.getPassword());
-        System.out.printf(emailObj+" "+pass);
-        return emailObj;
+        return userRepo.findByEmailAndPassword(userDtoRequest.getEmail(), userDtoRequest.getPassword());
     }
 
 }
