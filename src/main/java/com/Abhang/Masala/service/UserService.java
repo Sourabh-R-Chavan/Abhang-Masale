@@ -9,6 +9,5 @@ import java.util.Optional;
 @Service
 public interface UserService {
     Optional<User> signup(User user);
-
-    Optional<User> login(Long contactNo);
+    Optional<User> login(User user);
 }

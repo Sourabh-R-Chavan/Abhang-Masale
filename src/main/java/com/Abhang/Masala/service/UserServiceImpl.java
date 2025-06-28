@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Optional<User> login(Long contactNo) {
-        return userRepo.findByContactNo(contactNo);
+    public Optional<User> login(User user) {
+        return userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
     }
 
 }

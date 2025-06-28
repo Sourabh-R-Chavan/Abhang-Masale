@@ -26,13 +26,13 @@ public class loginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Long contactNo) {
-        if (contactNo != 0) {
-            Optional<User> loginObj = userService.login(contactNo);
+    public ResponseEntity<?> login(@RequestBody User user) {
+        if (user!=null) {
+            Optional<User> loginObj = userService.login(user);
             return ResponseEntity.status(HttpStatus.FOUND).body(loginObj);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(User.builder().firstName("null")
-                .lastName("null").contactNo(Long.valueOf(1234567890)).build());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).
+                body(User.builder().firstName("null"));
     }
 
 }

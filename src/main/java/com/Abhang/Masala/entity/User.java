@@ -18,7 +18,6 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
-    private Long contactNo;
+    private String email;
     private String password;
-    private String confirmPass;
 }
