@@ -27,7 +27,7 @@ public class loginController {
     @PostMapping("/signup")
     public ResponseEntity<Optional<User>> signUp(@RequestBody User user) {
         Optional<User> userObj = userService.signup(user);
-        emailService.sendSimpleEmail(user.getEmail(), Variables.SIGNUP_SUBJECT, Variables.SIGNUP_BODY);
+        emailService.sendSimpleEmail(user.getEmail(), Variables.SIGNUP_SUBJECT, Variables.SIGNUP_BODY1+Variables.SIGNUP_BODY2+Variables.Footer1+Variables.Footer2+Variables.Footer3);
         return ResponseEntity.ok().body(userObj);
     }
 
