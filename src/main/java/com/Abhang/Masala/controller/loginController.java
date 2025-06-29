@@ -1,5 +1,6 @@
 package com.Abhang.Masala.controller;
 
+import com.Abhang.Masala.dto.ResetPasswordDTO;
 import com.Abhang.Masala.dto.UserDtoRequest;
 import com.Abhang.Masala.entity.User;
 import com.Abhang.Masala.service.EmailService;
@@ -26,13 +27,13 @@ public class loginController {
     @PostMapping("/signup")
     public ResponseEntity<Optional<User>> signUp(@RequestBody User user) {
         Optional<User> userObj = userService.signup(user);
-        emailService.sendSimpleEmail(user.getEmail(), Variables.SIGNUP_SUBJECT,Variables.SIGNUP_BODY);
+        emailService.sendSimpleEmail(user.getEmail(), Variables.SIGNUP_SUBJECT, Variables.SIGNUP_BODY);
         return ResponseEntity.ok().body(userObj);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDtoRequest userDtoRequest) {
-        if (userDtoRequest!=null) {
+        if (userDtoRequest != null) {
             Optional<User> loginObj = userService.login(userDtoRequest);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(loginObj);
         }
@@ -40,4 +41,18 @@ public class loginController {
                 body(User.builder().firstName("null"));
     }
 
+    @PostMapping("/auth/forgot-password")
+    public void forgotPassword(@RequestParam String email) {
+        userService.forgotPassword(email);
+    }
+
+    @PostMapping("/auth/reset-password/{email}")
+    public ResponseEntity<?> ResetPassword(@PathVariable String email, @RequestBody ResetPasswordDTO resetPasswordDTO) {
+        if (resetPasswordDTO != null) {
+            Optional<User> usrObj = userService.resetPassword(email,resetPasswordDTO);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(usrObj);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).
+                body(User.builder().firstName("null").lastName("null").build());
+    }
 }
